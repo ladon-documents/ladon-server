@@ -1,6 +1,12 @@
 # Ladon Documents Server
+Required tools:
 
-Ladon Community Edition
+Java 21
+Maven
+Docker
+Docker-Compose
+
+## Ladon Community Edition
 
 ```shell
 cd ladon-ce
