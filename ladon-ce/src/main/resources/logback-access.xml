@@ -1,0 +1,19 @@
+<configuration>
+    <appender name="ACCESSLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/access_log.txt</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>./logs/access_log.%d{yyyy-MM-dd.HH}.txt</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%h %l %u [%t] "%r" %s %b %D</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%h %l %u [%t] "%r" %s %b %D</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="ACCESSLOG"/>
+</configuration>

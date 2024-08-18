@@ -1,0 +1,58 @@
+<configuration scan="true">
+    <jmxConfigurator/>
+
+    <!-- No shutdown hook; we run it ourselves in StorageService after shutdown -->
+
+    <!-- SYSTEMLOG rolling file appender to system.log (INFO level) -->
+
+    <appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <file>./logs/ladon.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>./logs/ladon.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--            <maxHistory>60</maxHistory>-->
+            <!--            <totalSizeCap>20GB</totalSizeCap>-->
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%-5p %-17d{yyyy-MM-dd HH:mm:ss} %c %m%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- STDOUT console appender to stdout (INFO level) -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Uncomment bellow and corresponding appender-ref to activate logback metrics
+    <appender name="LogbackMetrics" class="com.codahale.metrics.logback.InstrumentedAppender" />
+     -->
+
+    <root level="INFO">
+        <appender-ref ref="SYSTEMLOG"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="Events.Bundle" level="TRACE"/>
+    <logger name="org.apache.cassandra" level="INFO"/>
+    <logger name="de.mc.ladon.server.persistence.cassandra.bootstrap" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="com.thinkaurelius.thrift" level="ERROR"/>
+    <logger name="org.apache.tomcat.util.net.NioEndpoint" level="INFO"/>
+</configuration>

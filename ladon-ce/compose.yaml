@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  ladon:
+    image: ladon-ce
+    volumes:
+      - $HOME/ladon:/root
+    ports:
+      - "8080:8080"
