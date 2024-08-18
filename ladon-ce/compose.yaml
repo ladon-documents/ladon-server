@@ -1,9 +1,15 @@
-version: "3.8"
-
 services:
   ladon:
     image: ladon-ce
+    restart: unless-stopped
     volumes:
-      - $HOME/ladon:/root
+      - "ladon-data:/root"
     ports:
-      - "8080:8080"
+      - "${APP_PORT}:8080"
+volumes:
+  ladon-data:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "${APP_VOLUME}"
